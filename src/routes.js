@@ -1,5 +1,6 @@
 import Home from "./components/Home.vue";
 import UsersTable from "./components/UsersTable";
+import UserDetail from "./components/UserDetail";
 
 export const routes = [
   {
@@ -10,9 +11,20 @@ export const routes = [
   },
 
   {
+    path: "/userDetail",
+    name: "userDetail",
+
+    components: { default: UserDetail, UserDetail: UserDetail }
+  },
+
+  {
     path: "/posts",
     name: "posts",
-    components: { default: UsersTable, user: UsersTable }
+    components: { default: UsersTable, user: UsersTable },
+    children: [
+      // { path: ":id/userDetail", component: UserDetail, name: "userDetail" },
+      { path: ":id", component: UserDetail, name: "userDetail" }
+    ]
   },
   {
     path: "/comments",

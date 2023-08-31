@@ -74,9 +74,6 @@ export default {
       })
 
   },
-
-
-
   data() {
     return {
       gelenData: null,

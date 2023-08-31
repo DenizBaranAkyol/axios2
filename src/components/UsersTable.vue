@@ -1,9 +1,6 @@
 <template>
   <div>
-    <router-link class="btn btn-success" tag="button" to="home">Go Home</router-link>
-    <!-- ------------------------------------------------------------------------------------- -->
-
-    <h1>{{ data }} {{ userDetail }} {{ result }}</h1>
+    <button class="btn btn-success" @click="navigateToHome">Go home</button>
 
     <table class="table table-hover table-success table-striped">
       <thead>
@@ -16,25 +13,18 @@
 
           <th v-if="user.userId != null" scope="row"> {{ user.userId }}</th>
           <td v-if="user.postId != null">{{ user.postId }}</td>
-
-
-          <td v-if="user.id != null"> <button @click="data = user.id, get" class="btn btn-primary">Get User Data</button>
-            {{
-              user.id
-            }}
+          <td v-if="user.id != null">
+            <router-link tag="button" class="btn btn-primary"
+              :to="{ name: 'userDetail', params: { id: data, data: gelenData } }">
+              <button @click="data = user.id" class="btn btn-primary">Kullanıcı Bilgileri {{
+                user.id
+              }}</button></router-link>
           </td>
-
-
-
-
           <td v-if="user.title != null">{{ user.title }}</td>
           <td v-if="user.name != null">{{ user.name }}</td>
           <td v-if="user.username != null">{{ user.username }}</td>
           <td v-if="user.email != null">{{ user.email }}</td>
           <td v-if="user.body != null">{{ user.body }}</td>
-          <!-- <td v-if="user.address != null">{{ user.address }}</td> -->
-
-
           <td v-if="user.address != null">
             @{{
               user.address.street +
@@ -46,9 +36,6 @@
               user.address.zipcode
             }}
           </td>
-
-
-
           <td v-if="user.phone != null">{{ user.phone }}</td>
           <td v-if="user.website != null">{{ user.website }}</td>
           <td v-if="user.company != null">{{ user.company }}</td>
@@ -64,49 +51,10 @@
         </tr>
       </tbody>
     </table>
-
-    <!-- ------------------------------------------------------------------------------------------------- -->
-
-    <!-- <table v-show="show" class="table table-hover table-success table-striped">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
-          <th scope="col">User Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Adress</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="user in gelenData">
-          <th scope="row">{{ user.id }}</th>
-          <td>{{ user.name }}</td>
-          <td>{{ user.username }}</td>
-          <td>@{{ user.email }}</td>
-          <td>
-            @{{
-              user.address.street +
-              " " +
-              user.address.suite +
-              " " +
-              user.address.city +
-              " " +
-              user.address.zipcode
-            }}
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
-
-
-
-
-
-    <!-- --------------------------------------------------------------------------------------------------------- -->
   </div>
 </template>
-
 <script>
+import { RouterView } from "vue-router";
 
 import axios from 'axios';
 export default {
@@ -123,18 +71,10 @@ export default {
 
 
   methods: {
-    get() {
-      axios
-        .get(`https://jsonplaceholder.typicode.com/users?id=${this.data}`)
-        .then(response => {
-          this.userDetail = response.data;
-
-        })
+    navigateToHome() {
+      this.$router.push("/home");
     }
   },
-
-
-
   data() {
     return {
       gelenData: null,
@@ -144,7 +84,6 @@ export default {
 
     }
   },
-
 
   created() {
     if (this.$route.params.name == "posts") {
@@ -168,16 +107,6 @@ export default {
     }
 
   },
-
-  // updated() {
-
-  //   axios
-  //     .get(`https://jsonplaceholder.typicode.com/users?id=${this.data}`)
-  //     .then(response => {
-  //       this.userDetail = response.data;
-  //       console.log(this.userDetail);
-  //     })
-  // }
 
 }
 </script>
